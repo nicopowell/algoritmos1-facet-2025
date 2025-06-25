@@ -3,6 +3,8 @@
 
 using namespace std;
 
+float maximoDeposito(Cuenta* C);
+
 int main()
 {
     cout << "==== Iniciando programa de prueba ====" << endl;
@@ -56,6 +58,18 @@ int main()
     mostrarCuenta(C);
     cout << "Cantidad (2): " << cantidad(C) << endl;
 
+    cout << "\nDeposito $125" << endl;
+    C = depositar(C, 125);
+    cout << "Deposito $50" << endl;
+    C = depositar(C, 50);
+    cout << "Deposito $80" << endl;
+    C = depositar(C, 80);
+    cout << "Muestro C (Se espera $80, $50, $125, $7.5 y $15): ";
+    mostrarCuenta(C);
+    cout << "El maximo deposito es ($125): $" << maximoDeposito(&C) << endl;
+    cout << "Muestro C luego de usar funcion maximo: ";
+    mostrarCuenta(C);
+
     cout << "\nLIBERO LA LISTA" << endl;
     while (!estaVacia(C))
     {
@@ -64,4 +78,14 @@ int main()
     cout << "Muestro C luego de liberar: ";
     mostrarCuenta(C);
     return 0;
+}
+
+float maximoDeposito(Cuenta* C){
+    float maximo = indefinido;
+    while (!estaVacia(*C))
+    {
+        if (maximo < ultima(*C)) maximo = ultima(*C);
+        *C = deshacer(*C);
+    }
+    return maximo;
 }
